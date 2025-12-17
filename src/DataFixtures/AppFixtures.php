@@ -3,6 +3,7 @@
 namespace App\DataFixtures;
 
 use App\Entity\Link;
+use App\Entity\User;
 
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Persistence\ObjectManager;
@@ -22,6 +23,13 @@ class AppFixtures extends Fixture
         $article->setLienTitre('Console Component');
         $article->setLienDesc('The Console component eases the creation of beautiful and testable command line interfaces.');
         $manager->persist($article);
+
+        $user = new User();
+        $user->setUsername('admin');
+        $user->setRoles(['ROLE_ADMIN']);
+        $user->setPassword(password_hash('adminpass', PASSWORD_BCRYPT));
+        $manager->persist($user);
+
 
         $manager->flush();
     }
