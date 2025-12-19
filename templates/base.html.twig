@@ -12,6 +12,17 @@
         {% endblock %}
     </head>
     <body>
+        <nav>
+            <ul>
+                <li><a href="{{ path('app_blog') }}">Accueil</a></li>
+                {% if is_granted('ROLE_USER') %}
+                    <li><a href="{{ path('app_dashboard') }}">Tableau de bord</a></li>
+                    <li><a href="{{ path('app_logout') }}">Se déconnecter</a></li>
+                {% else %}
+                    <li><a href="{{ path('app_login') }}">Se connecter</a></li>
+                {% endif %}
+            </ul>
+        </nav>
         {% block body %}{% endblock %}
     </body>
 </html>
