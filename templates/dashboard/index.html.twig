@@ -9,8 +9,8 @@
     
     <h2>Liens utiles</h2>
     <ul>
-        {% if is_granted('ROLE_ADMIN') %}
         <li><a href="{{ path('app_link_index') }}">Gérer les liens</a></li>
+        {% if is_granted('ROLE_ADMIN') %}
         <li><a href="{{ path('app_user_index') }}">Gérer les utilisateurs</a></li>
         {% endif %}
     </ul>
