@@ -3,7 +3,7 @@
 {% block title %}Link{% endblock %}
 
 {% block body %}
-    <h1>Link</h1>
+    <h1>Lien</h1>
 
     <table class="table">
         <tbody>
@@ -28,7 +28,7 @@
                 <td>
                     {% if link.keywords|length > 0 %}
                         {% for keyword in link.keywords %}
-                            <span class="badge bg-primary me-1">
+                            <span class="badge badge-dark>
                                 <a href="{{ path('app_keyword_show', {'id': keyword.id}) }}" class="text-white text-decoration-none">
                                     {{ keyword.name }}
                                 </a>
@@ -42,9 +42,9 @@
         </tbody>
     </table>
 
-    <a href="{{ path('app_link_index') }}">back to list</a>
+    <a href="{{ path('app_link_index') }}" class="btn btn-secondary">Retour à la liste</a>
 
-    <a href="{{ path('app_link_edit', {'id': link.id}) }}">edit</a>
+    <a href="{{ path('app_link_edit', {'id': link.id}) }}" class="btn btn-warning">Modifier</a>
 
     {{ include('link/_delete_form.html.twig') }}
 {% endblock %}

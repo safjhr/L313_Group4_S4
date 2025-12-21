@@ -1,28 +1,60 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <meta charset="UTF-8">
-        <title>{% block title %}Welcome!{% endblock %}</title>
-        <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 128 128%22><text y=%221.2em%22 font-size=%2296%22>⚫️</text><text y=%221.3em%22 x=%220.2em%22 font-size=%2276%22 fill=%22%23fff%22>sf</text></svg>">
-        {% block stylesheets %}
-        {% endblock %}
-
-        {% block javascripts %}
-            {% block importmap %}{{ importmap('app') }}{% endblock %}
-        {% endblock %}
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/css/bootstrap.min.css" rel="stylesheet">
+        <link href="{{ app.request.basepath }}/assets/styles/app.css" rel="stylesheet">
+        <title>{% block title %}Watson - Symfony{% endblock %}</title>
     </head>
     <body>
-        <nav>
-            <ul>
-                <li><a href="{{ path('app_blog') }}">Accueil</a></li>
-                {% if is_granted('ROLE_USER') %}
-                    <li><a href="{{ path('app_dashboard') }}">Tableau de bord</a></li>
-                    <li><a href="{{ path('app_logout') }}">Se déconnecter</a></li>
-                {% else %}
-                    <li><a href="{{ path('app_login') }}">Se connecter</a></li>
-                {% endif %}
-            </ul>
-        </nav>
-        {% block body %}{% endblock %}
+        <div class="container">
+            <nav class="navbar navbar-default navbar-fixed-top navbar-inverse" role="navigation">
+                <div class="container">
+                    <div class="navbar-header">
+                        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar-collapse-target">
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                        </button>
+                        <a class="navbar-brand" id="logo" href="{{ path('app_blog') }}">Watson</a>
+                    </div>
+                    <div class="collapse navbar-collapse" id="navbar-collapse-target">
+                        <ul class="nav navbar-nav navbar-right">
+                            {% if app.user and is_granted('ROLE_ADMIN') %}
+                                <li class="{% if adminMenu is defined %}active{% endif %}"><a href="{{ path('app_dashboard') }}"><span class="glyphicon glyphicon-cog"></span> Administration</a></li>
+                            {% endif %}
+                            {% if app.user and is_granted('IS_AUTHENTICATED_FULLY') %}
+                                <li class="dropdown">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                                    <span class="glyphicon glyphicon-user"></span> Bienvenue, {{ app.user.username }} <b class="caret"></b></a>
+                                    <ul class="dropdown-menu">
+                                        <li><a href="{{ path('app_logout') }}">Se déconnecter</a></li>
+                                    </ul>
+                                </li>
+                            {% else %}
+                                <li class="dropdown">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                                    <span class="glyphicon glyphicon-user"></span> Non connecté <b class="caret"></b></a>
+                                    <ul class="dropdown-menu">
+                                        <li><a href="{{ path('app_login') }}">Se connecter</a></li>
+                                    </ul>
+                                </li>
+                            {% endif %}
+                        </ul>
+                    </div>
+                </div><!-- /.container -->
+            </nav>
+            <div id="content">{% block body %}{% endblock %}</div>
+            <footer class="footer">
+                Watson + Symfony - Créé avec ♥ par L313 Groupe 4 
+            </footer>
+        </div>
+        
+        <!-- jQuery -->
+        <script src="https://cdn.jsdelivr.net/npm/jquery@1.11.3/dist/jquery.min.js"></script>
+        <!-- JavaScript Boostrap plugin -->
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/js/bootstrap.min.js"></script>
     </body>
 </html>
