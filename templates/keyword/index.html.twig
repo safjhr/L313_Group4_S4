@@ -1,0 +1,37 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Liste des mots clés{% endblock %}
+
+{% block body %}
+    <h1>Liste des mots clés</h1>
+
+    <a href="{{ path('app_keyword_new') }}" class="btn btn-primary mb-3">Créer un nouveau mot clé</a>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Nom</th>
+                <th>Nombre de liens</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for keyword in keywords %}
+            <tr>
+                <td>{{ keyword.id }}</td>
+                <td>{{ keyword.name }}</td>
+                <td>{{ keyword.links|length }}</td>
+                <td>
+                    <a href="{{ path('app_keyword_show', {'id': keyword.id}) }}" class="btn btn-sm btn-info">Voir</a>
+                    <a href="{{ path('app_keyword_edit', {'id': keyword.id}) }}" class="btn btn-sm btn-warning">Modifier</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="4">Aucun mot clé trouvé</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}

@@ -13,7 +13,7 @@
             </tr>
             <tr>
                 <th>Lien_url</th>
-                <td>{{ link.lienUrl }}</td>
+                <td><a href="{{ link.lienUrl }}" target="_blank">{{ link.lienUrl }}</a></td>
             </tr>
             <tr>
                 <th>Lien_titre</th>
@@ -22,6 +22,22 @@
             <tr>
                 <th>Lien_desc</th>
                 <td>{{ link.lienDesc }}</td>
+            </tr>
+            <tr>
+                <th>Mots clés</th>
+                <td>
+                    {% if link.keywords|length > 0 %}
+                        {% for keyword in link.keywords %}
+                            <span class="badge bg-primary me-1">
+                                <a href="{{ path('app_keyword_show', {'id': keyword.id}) }}" class="text-white text-decoration-none">
+                                    {{ keyword.name }}
+                                </a>
+                            </span>
+                        {% endfor %}
+                    {% else %}
+                        <em>Aucun mot clé associé</em>
+                    {% endif %}
+                </td>
             </tr>
         </tbody>
     </table>

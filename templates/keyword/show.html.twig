@@ -1,0 +1,41 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Mot clé{% endblock %}
+
+{% block body %}
+    <h1>Mot clé : {{ keyword.name }}</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ keyword.id }}</td>
+            </tr>
+            <tr>
+                <th>Nom</th>
+                <td>{{ keyword.name }}</td>
+            </tr>
+            <tr>
+                <th>Nombre de liens associés</th>
+                <td>{{ keyword.links|length }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    {% if keyword.links|length > 0 %}
+        <h2>Liens associés</h2>
+        <ul class="list-group mb-3">
+            {% for link in keyword.links %}
+                <li class="list-group-item">
+                    <a href="{{ path('app_link_show', {'id': link.id}) }}">{{ link.lienTitre }}</a>
+                    <small class="text-muted">- {{ link.lienUrl }}</small>
+                </li>
+            {% endfor %}
+        </ul>
+    {% endif %}
+
+    <a href="{{ path('app_keyword_index') }}" class="btn btn-secondary">Retour à la liste</a>
+    <a href="{{ path('app_keyword_edit', {'id': keyword.id}) }}" class="btn btn-warning">Modifier</a>
+
+    {{ include('keyword/_delete_form.html.twig') }}
+{% endblock %}

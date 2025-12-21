@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\LinkRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
@@ -22,6 +24,18 @@ class Link
 
     #[ORM\Column(type: Types::TEXT, nullable: true)]
     private ?string $lien_desc = null;
+
+    /**
+     * @var Collection<int, Keyword>
+     */
+    #[ORM\ManyToMany(targetEntity: Keyword::class, inversedBy: 'links')]
+    #[ORM\JoinTable(name: 'link_keyword')]
+    private Collection $keywords;
+
+    public function __construct()
+    {
+        $this->keywords = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -60,6 +74,30 @@ class Link
     public function setLienDesc(?string $lien_desc): static
     {
         $this->lien_desc = $lien_desc;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Keyword>
+     */
+    public function getKeywords(): Collection
+    {
+        return $this->keywords;
+    }
+
+    public function addKeyword(Keyword $keyword): static
+    {
+        if (!$this->keywords->contains($keyword)) {
+            $this->keywords->add($keyword);
+        }
+
+        return $this;
+    }
+
+    public function removeKeyword(Keyword $keyword): static
+    {
+        $this->keywords->removeElement($keyword);
 
         return $this;
     }
